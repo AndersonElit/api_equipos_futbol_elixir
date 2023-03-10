@@ -40,4 +40,16 @@ defmodule ApiEquiposFutbolWeb.JugadorController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def transferir(conn, %{"jugador_id" => jugador_id, "equipo_id" => equipo_id}) do
+    with {:ok, %Jugador{} = jugador} <- Jugadores.transferir_jugador(jugador_id, equipo_id) do
+      render(conn, :show, jugador: jugador)
+    end
+  end
+
+  def jugadoresEquipo(conn, %{"id_equipo" => id_equipo}) do
+    jugadores = Jugadores.jugadores_equipo(id_equipo)
+    render(conn, :index, jugadores: jugadores)
+  end
+
 end

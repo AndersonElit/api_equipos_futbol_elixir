@@ -26,6 +26,8 @@ defmodule ApiEquiposFutbolWeb.Router do
     resources "/posiciones", PosicionController, except: [:new, :edit]
     resources "/equipos", EquipoController, except: [:new, :edit]
     resources "/jugadores", JugadorController, except: [:new, :edit]
+    put "/jugadores/transferir/:jugador_id", JugadorController, :transferir
+    get "/jugadores/jugadores-equipo/:id_equipo", JugadorController, :jugadoresEquipo
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

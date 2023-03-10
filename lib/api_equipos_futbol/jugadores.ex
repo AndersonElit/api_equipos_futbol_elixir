@@ -102,4 +102,27 @@ defmodule ApiEquiposFutbol.Jugadores do
     Jugador.changeset(jugador, attrs)
   end
 
+  #def transferir_jugador(jugador_id, equipo_id) do
+  def transferir_jugador(jugador_id, equipo_id) do
+    jugador = Repo.get(Jugador, jugador_id)
+    changeset = Jugador.changeset(jugador, %{equipo_id: equipo_id})
+    Repo.update(changeset)
+  end
+
+  def jugadores_equipo(id_equipo) do
+    query =
+      from(u in Jugador,
+      where: u.equipo_id == ^id_equipo,
+      select: {u})
+    jugadores = Repo.all(query)
+    for jugador <- jugadores do
+      {%ApiEquiposFutbol.Jugadores.Jugador{
+        id: id, nombre_completo: nombre, edad: edad, equipo_id: equipo_id, posicion_id: posicion_id
+      }} = jugador
+      %Jugador{
+        id: id, nombre_completo: nombre, edad: edad, equipo_id: equipo_id, posicion_id: posicion_id
+      }
+    end
+  end
+
 end
